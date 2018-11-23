@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.cluster.ClusterMapper" >
+  <!-- 如下type的User就是mybatis-config.xml中配置的user -->
+  <resultMap id="BaseResultMap" type="com.example.demo.data.User" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+  </resultMap>
+ <!--  定义基本表和基本列 -->
+  <sql id="Base_Table" >
+   				 test_user
+  </sql>
+  <sql id="Base_Column_List" >
+   				 id, name, age,password
+  </sql>
+  
+<!--自己配置的查询表所有数据的sql-->
+  <select id="selectAllUser" resultType="com.example.demo.data.User">
+    select 
+     <include refid="Base_Column_List" />
+    from 
+      <include refid="Base_Table" />
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultType="com.example.demo.data.User" parameterType="String" >
+    select 
+    	<include refid="Base_Column_List" />
+    from test_user
+    where
+	    <if test="name != null and name != ''">
+	 name  = #{name,jdbcType=VARCHAR}
+	    </if>
+     
+  </select>
+</mapper>
